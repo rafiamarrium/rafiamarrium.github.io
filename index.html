@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rafia Marrium - Software Engineer Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #0f3460;
+            --highlight: #e94560;
+            --light: #f5f5f5;
+            --text: #333;
+            --border: #ddd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--primary);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav .logo {
+            color: var(--highlight);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--highlight);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+            margin-top: 2rem;
+            border-radius: 10px;
+            margin-left: 2rem;
+            margin-right: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero .title {
+            font-size: 1.5rem;
+            color: var(--highlight);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-contact {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-contact a {
+            color: var(--highlight);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .hero-contact a:hover {
+            transform: translateY(-3px);
+            text-decoration: underline;
+        }
+
+        /* Section Styles */
+        section {
+            margin: 3rem 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--primary);
+            border-bottom: 3px solid var(--highlight);
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        h3 {
+            color: var(--accent);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Experience Section */
+        .experience-item {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .experience-item:last-child {
+            border-bottom: none;
+        }
+
+        .job-title {
+            color: var(--highlight);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .company {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .date {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .description {
+            margin-top: 0.5rem;
+            color: #555;
+        }
+
+        .description li {
+            margin-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--highlight);
+        }
+
+        .skill-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .project-card h3 {
+            color: white;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-tech {
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Languages Section */
+        .language-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .language-item:last-child {
+            border-bottom: none;
+        }
+
+        .language-name {
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 0.3rem;
+        }
+
+        /* Education Section */
+        .education-item {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .education-item:last-child {
+            border-bottom: none;
+        }
+
+        .degree {
+            font-weight: bold;
+            color: var(--highlight);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .social-links {
+            margin: 1rem 0;
+        }
+
+        .social-links a {
+            color: var(--highlight);
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: transform 0.3s;
+        }
+
+        .social-links a:hover {
+            transform: scale(1.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-contact {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section, .hero {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--highlight);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: var(--highlight);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">RM</div>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Rafia Marrium</h1>
+        <div class="title">Backend Software Engineer</div>
+        <p>Specialized in Scala, Java, and microservices architecture. Building scalable solutions with CQRS and event-driven design. Currently based in Copenhagen, Denmark.</p>
+        <div class="hero-contact">
+            <a href="mailto:rafimarrium@gmail.com">✉️ rafimarrium@gmail.com</a>
+            <a href="tel:+4571682355">📱 +45 71 68 23 55</a>
+            <a href="https://linkedin.com/in/rafia-marrium" target="_blank">💼 LinkedIn</a>
+            <a href="https://github.com" target="_blank">💻 GitHub</a>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>About Me</h2>
+        <p>I'm an experienced software engineer specializing in backend development and microservices, with a strong background in Scala and Java. I have a deep understanding of CQRS and event-driven design, and I've worked extensively on e-commerce solutions.</p>
+        <p>Beyond coding, I'm a driven and motivated person who thrives on collaboration—and yes, I'm also a bit of a documentation nerd! I love solving complex problems, writing clean and efficient code, and occasionally unwinding by baking something delicious.</p>
+        <p>Right now, I'm also learning Danish to better understand the culture and connect with the people around me. Always excited to learn new things, tackle challenges, and work with like-minded folks!</p>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+        <h2>Work Experience</h2>
+
+        <div class="experience-item">
+            <div class="job-title">Academic Employee – Section for Data and Monitoring</div>
+            <div class="company">DTU (Danmarks Tekniske Universitet), Lyngby, Denmark</div>
+            <div class="date">Present</div>
+            <div class="description">
+                <strong>Technologies:</strong> Java, C# .NET, Android Studio, WPF, Entity Framework<br><br>
+                <ul>
+                    <li>Development of 'FiskeSnak', an android-native application (Java, Gradle) with voice recording and storage, user management, and remote server connection for transcription</li>
+                    <li>Feature development and bug fixing of the internal organizational software 'Fiskeline' (C# .NET, WPF, Entity Framework, MVVM) contributing to system reliability</li>
+                    <li>Explored and documented a centralized setup of CVAT on a single GPU-enabled server, allowing the annotation team remote access</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="experience-item">
+            <div class="job-title">Software Engineer – Backend</div>
+            <div class="company">Upstart Commerce, New Hampshire, USA (Remote)</div>
+            <div class="date">Apr 2022 – Dec 2023</div>
+            <div class="description">
+                <strong>Technologies:</strong> Scala, Java, Hexagonal Architecture, CQRS, ScalaTest, Mockito<br><br>
+                <ul>
+                    <li>Participated in development and maintenance of 4 existing and 3 new microservices using Scala, applying Hexagonal Architecture, CQRS, and API-first principles</li>
+                    <li>Optimized bulk write and update processes, reducing execution time by 80% through query tuning and code optimization</li>
+                    <li>Drove quality assurance efforts, achieving 80% statement and branch coverage with ScalaTest and Mockito</li>
+                    <li>Collaborated with support team to streamline communication and address feature requests</li>
+                    <li>Mentored 2 new team members through onboarding and technology integration</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="experience-item">
+            <div class="job-title">Unity Software Developer</div>
+            <div class="company">Quantum Edge LLC, Pakistan</div>
+            <div class="date">Aug 2019 – Apr 2022</div>
+            <div class="description">
+                <strong>Technologies:</strong> C#, Unity, ARCore, ARFoundation, Vuforia SDK<br><br>
+                <ul>
+                    <li>Led integration efforts for Augmented Reality modules for 5+ applications</li>
+                    <li>Designed and developed 10+ 2D games in C#, overseeing entire development lifecycle</li>
+                    <li>Implemented Android Ads integration using Google AdMob and Unity native ads</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2>Key Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>FiskeSnak</h3>
+                <p>Native Android application for capturing voice recordings, uploading to a server for transcription, with editing and database storage capabilities.</p>
+                <div>
+                    <span class="project-tech">Java</span>
+                    <span class="project-tech">Android</span>
+                    <span class="project-tech">Gradle</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>PIM Microservice</h3>
+                <p>Product Information Management system enabling custom attribute creation, product type definition, and JSON schema validation for e-commerce platforms.</p>
+                <div>
+                    <span class="project-tech">Java</span>
+                    <span class="project-tech">Microservices</span>
+                    <span class="project-tech">CQRS</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>Pricing Feed Service</h3>
+                <p>High-performance service facilitating bulk upload of sales and pricing data with validation and real-time upload tracking.</p>
+                <div>
+                    <span class="project-tech">Scala</span>
+                    <span class="project-tech">Event-driven</span>
+                    <span class="project-tech">Kafka</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2>Skills & Expertise</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h4>🖥️ Languages</h4>
+                <p><strong>Primary:</strong> Scala, Java, C#<br>
+                <strong>Other:</strong> JavaScript, Python</p>
+            </div>
+
+            <div class="skill-card">
+                <h4>🏗️ Architecture & Patterns</h4>
+                <p>Hexagonal Architecture, CQRS, Event-driven Design, Microservices, Domain-Driven Design</p>
+            </div>
+
+            <div class="skill-card">
+                <h4>🛠️ Tools & Frameworks</h4>
+                <p>AKKA, Kafka, Spring, Entity Framework, WPF, Android Studio, IntelliJ, Visual Studio</p>
+            </div>
+
+            <div class="skill-card">
+                <h4>💾 Databases</h4>
+                <p>PostgreSQL, Cassandra, MySQL</p>
+            </div>
+
+            <div class="skill-card">
+                <h4>☁️ DevOps & Cloud</h4>
+                <p>Docker, Kubernetes, Google Cloud Platform, GitHub</p>
+            </div>
+
+            <div class="skill-card">
+                <h4>✅ Testing & QA</h4>
+                <p>JUnit, ScalaTest, Mockito, 80%+ Code Coverage</p>
+            </div>
+        </div>
+
+        <!-- Certifications -->
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--border);">
+            <h3>Certifications</h3>
+            <ul style="list-style: none; padding-left: 0;">
+                <li>✓ Scala & Functional Programming Essentials (Udemy)</li>
+                <li>✓ Advanced Scala and Functional Programming (Udemy)</li>
+                <li>✓ Lightbend Akka for Scala Professional (Akka)</li>
+                <li>✓ Lightbend Akka Streams for Scala Professional (Akka)</li>
+                <li>✓ Lightbend Akka Cluster Fundamentals (Akka)</li>
+                <li>✓ Reactive Architecture: Introduction to Reactive Systems (Akka)</li>
+                <li>✓ Reactive Architecture: Domain Driven Design (Akka)</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education">
+        <h2>Education</h2>
+        <div class="education-item">
+            <div class="degree">Bachelor of Science in Software Engineering</div>
+            <div class="company">COMSATS University, Islamabad, Pakistan</div>
+            <div class="date">2015 – 2019</div>
+            <p><strong>CGPA:</strong> 3.76 / 4.00</p>
+            <p><strong>Major Subjects:</strong> Object-Oriented Programming, Web Programming, Database Management, Data Structures, Software Engineering, Computer Graphics, AI</p>
+        </div>
+    </section>
+
+    <!-- Languages Section -->
+    <section id="languages">
+        <h2>Languages</h2>
+        <div class="language-item">
+            <div class="language-name">English</div>
+            <div class="language-level">Fluent • Level C1 (IELTS: 7.5)</div>
+        </div>
+        <div class="language-item">
+            <div class="language-name">Danish</div>
+            <div class="language-level">Beginner • Level A2+ (Currently enrolled in VSK Dansk language school)</div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Let's Connect</h2>
+        <p style="font-size: 1.1rem; margin-bottom: 2rem;">I'm always interested in exciting opportunities and collaborations. Feel free to reach out!</p>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="mailto:rafimarrium@gmail.com" class="btn">📧 Email Me</a>
+            <a href="https://linkedin.com/in/rafia-marrium" target="_blank" class="btn btn-secondary">💼 LinkedIn</a>
+            <a href="https://github.com" target="_blank" class="btn btn-secondary">💻 GitHub</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Rafia Marrium. All rights reserved.</p>
+        <div class="social-links">
+            <a href="mailto:rafimarrium@gmail.com">Email</a>
+            <a href="https://linkedin.com/in/rafia-marrium" target="_blank">LinkedIn</a>
+            <a href="https://github.com" target="_blank">GitHub</a>
+        </div>
+    </footer>
+</body>
+</html>
