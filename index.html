@@ -8,16 +8,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #050a0e;
-      --surface: #0c1419;
-      --surface2: #111d24;
-      --border: rgba(0,255,170,0.12);
-      --accent: #00ffaa;
-      --accent2: #00c8ff;
-      --accent3: #ff6b6b;
-      --text: #e0f0ec;
-      --muted: #5a8070;
-      --card-bg: rgba(12,20,25,0.85);
+      --bg: #06080f;
+      --surface: #0b0f1c;
+      --surface2: #111628;
+      --border: rgba(99,155,255,0.14);
+      --accent: #5b9fff;
+      --accent2: #a78bfa;
+      --accent3: #f472b6;
+      --text: #dde6f5;
+      --muted: #6b80a8;
+      --card-bg: rgba(11,15,28,0.88);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,6 +28,8 @@
       background: var(--bg);
       color: var(--text);
       font-family: 'Syne', sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
       overflow-x: hidden;
       cursor: none;
     }
@@ -73,8 +75,8 @@
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(rgba(0,255,170,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,255,170,0.03) 1px, transparent 1px);
+        linear-gradient(rgba(91,159,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(91,159,255,0.04) 1px, transparent 1px);
       background-size: 60px 60px;
       pointer-events: none;
       z-index: 0;
@@ -101,7 +103,7 @@
     .nav-links a {
       font-family: 'Space Mono', monospace;
       font-size: 0.72rem;
-      color: var(--muted);
+      color: #7a95c0;
       text-decoration: none;
       letter-spacing: 1.5px;
       text-transform: uppercase;
@@ -167,10 +169,10 @@
     }
 
     .hero-desc {
-      font-size: 1.05rem;
-      color: var(--muted);
+      font-size: 1.1rem;
+      color: #8fa8cc;
       max-width: 600px;
-      line-height: 1.8;
+      line-height: 1.9;
       margin-bottom: 2.5rem;
     }
     .hero-desc strong { color: var(--accent); font-weight: 600; }
@@ -224,7 +226,7 @@
     .stat-label {
       font-family: 'Space Mono', monospace;
       font-size: 0.65rem;
-      color: var(--muted);
+      color: #7a95c0;
       letter-spacing: 2px;
       text-transform: uppercase;
       margin-top: 0.4rem;
@@ -239,13 +241,13 @@
     }
     .orb-1 {
       width: 400px; height: 400px;
-      background: rgba(0,255,170,0.06);
+      background: rgba(91,159,255,0.07);
       top: 10%; right: 5%;
       animation: drift 12s ease-in-out infinite alternate;
     }
     .orb-2 {
       width: 300px; height: 300px;
-      background: rgba(0,200,255,0.05);
+      background: rgba(167,139,250,0.06);
       bottom: 20%; right: 20%;
       animation: drift 9s ease-in-out infinite alternate-reverse;
     }
@@ -285,10 +287,10 @@
       align-items: start;
     }
     .about-text p {
-      font-size: 1rem;
-      color: var(--muted);
-      line-height: 1.9;
-      margin-bottom: 1.2rem;
+      font-size: 1.05rem;
+      color: #8fa8cc;
+      line-height: 2;
+      margin-bottom: 1.3rem;
     }
     .about-text p strong { color: var(--text); font-weight: 600; }
 
@@ -327,10 +329,10 @@
     #skills { padding: 7rem 4rem; background: var(--surface); }
 
     .skills-intro {
-      font-size: 1rem;
-      color: var(--muted);
+      font-size: 1.05rem;
+      color: #8fa8cc;
       max-width: 700px;
-      line-height: 1.8;
+      line-height: 1.9;
       margin-bottom: 3.5rem;
     }
     .skills-intro strong { color: var(--accent); }
@@ -374,9 +376,9 @@
       margin-bottom: 0.5rem;
     }
     .skill-transfer {
-      font-size: 0.82rem;
-      color: var(--muted);
-      line-height: 1.7;
+      font-size: 0.88rem;
+      color: #8fa8cc;
+      line-height: 1.8;
     }
     .skill-tags {
       display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.2rem;
@@ -386,7 +388,7 @@
       font-size: 0.6rem;
       padding: 0.3rem 0.6rem;
       border: 1px solid var(--border);
-      color: var(--muted);
+      color: #7a95c0;
       letter-spacing: 1px;
       border-radius: 2px;
       transition: all 0.2s;
@@ -399,7 +401,7 @@
       display: flex; justify-content: space-between;
       font-family: 'Space Mono', monospace;
       font-size: 0.6rem;
-      color: var(--muted);
+      color: #7a95c0;
       letter-spacing: 1px;
       margin-bottom: 0.3rem;
     }
@@ -484,9 +486,9 @@
     }
     .tl-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
     .tl-list li {
-      font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 1.7;
+      font-size: 0.93rem;
+      color: #8fa8cc;
+      line-height: 1.8;
       padding-left: 1.2rem;
       position: relative;
     }
@@ -541,7 +543,7 @@
       margin-bottom: 0.75rem;
     }
     .project-name { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; }
-    .project-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+    .project-desc { font-size: 0.9rem; color: #8fa8cc; line-height: 1.8; }
 
     /* ── CERTIFICATIONS ── */
     #certifications { padding: 7rem 4rem; }
@@ -605,9 +607,9 @@
       margin-bottom: 1rem;
     }
     .edu-subjects {
-      font-size: 0.85rem;
-      color: var(--muted);
-      line-height: 1.7;
+      font-size: 0.9rem;
+      color: #8fa8cc;
+      line-height: 1.8;
     }
 
     /* ── LANGUAGES ── */
@@ -642,7 +644,7 @@
     }
     .ref-card:hover { border-color: rgba(0,255,170,0.3); }
     .ref-name { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
-    .ref-role { font-size: 0.8rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+    .ref-role { font-size: 0.85rem; color: #8fa8cc; line-height: 1.7; margin-bottom: 1rem; }
     .ref-contact {
       font-family: 'Space Mono', monospace;
       font-size: 0.65rem;
@@ -658,7 +660,7 @@
     .contact-glow {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at center, rgba(0,255,170,0.05) 0%, transparent 60%);
+      background: radial-gradient(ellipse at center, rgba(91,159,255,0.06) 0%, transparent 60%);
       pointer-events: none;
     }
     .contact-heading {
@@ -670,7 +672,7 @@
     .contact-sub {
       font-family: 'Space Mono', monospace;
       font-size: 0.8rem;
-      color: var(--muted);
+      color: #7a95c0;
       letter-spacing: 2px;
       margin-bottom: 3rem;
     }
