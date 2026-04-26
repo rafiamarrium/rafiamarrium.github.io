@@ -718,27 +718,12 @@
       footer { padding: 2rem 1.5rem; }
     }
 
-    /* ── SCAN LINE EFFECT ── */
-    .scanline {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(0,255,170,0.15), transparent);
-      animation: scan 4s linear infinite;
-      pointer-events: none;
-      z-index: 50;
-    }
-    @keyframes scan {
-      0% { top: 0; }
-      100% { top: 100vh; }
-    }
   </style>
 </head>
 <body>
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
-<div class="scanline"></div>
 
 <!-- NAV -->
 <nav>
