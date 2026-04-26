@@ -1,597 +1,1260 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rafia Marrium - Software Engineer Portfolio</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rafia Marrium — Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050a0e;
+      --surface: #0c1419;
+      --surface2: #111d24;
+      --border: rgba(0,255,170,0.12);
+      --accent: #00ffaa;
+      --accent2: #00c8ff;
+      --accent3: #ff6b6b;
+      --text: #e0f0ec;
+      --muted: #5a8070;
+      --card-bg: rgba(12,20,25,0.85);
+    }
 
-        :root {
-            --primary: #1a1a2e;
-            --secondary: #16213e;
-            --accent: #0f3460;
-            --highlight: #e94560;
-            --light: #f5f5f5;
-            --text: #333;
-            --border: #ddd;
-        }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text);
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-        }
+    html { scroll-behavior: smooth; }
 
-        /* Navigation */
-        nav {
-            background: var(--primary);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
 
-        nav .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
+    /* ── CUSTOM CURSOR ── */
+    .cursor {
+      position: fixed;
+      width: 12px; height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
+      mix-blend-mode: difference;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: left 0.12s ease-out, top 0.12s ease-out, width 0.2s, height 0.2s;
+      opacity: 0.6;
+    }
 
-        nav .logo {
-            color: var(--highlight);
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
 
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
+    /* ── GRID BACKGROUND ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,170,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,170,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 4rem;
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      background: rgba(5,10,14,0.8);
+    }
+    .nav-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; left: 0; bottom: -3px;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.25s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { width: 100%; }
 
-        nav a:hover {
-            color: var(--highlight);
-        }
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 1; }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 8rem 4rem 4rem;
+    }
+    .hero-inner { max-width: 900px; }
 
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 6rem 2rem;
-            text-align: center;
-            margin-top: 2rem;
-            border-radius: 10px;
-            margin-left: 2rem;
-            margin-right: 2rem;
-        }
+    .hero-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 30px; height: 1px;
+      background: var(--accent);
+    }
 
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
+    .hero-name {
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 0.3rem;
+    }
+    .hero-name .line1 { color: var(--text); }
+    .hero-name .line2 {
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(0,255,170,0.5);
+    }
 
-        .hero .title {
-            font-size: 1.5rem;
-            color: var(--highlight);
-            margin-bottom: 1rem;
-        }
+    .hero-title {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(0.85rem, 2vw, 1.1rem);
+      color: var(--accent2);
+      margin: 1.5rem 0 2rem;
+      letter-spacing: 1px;
+    }
 
-        .hero p {
-            font-size: 1.1rem;
-            margin: 1rem 0;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 600px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+    .hero-desc strong { color: var(--accent); font-weight: 600; }
 
-        .hero-contact {
-            margin-top: 2rem;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      border: 1px solid var(--accent);
+    }
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--accent);
+      box-shadow: 0 0 20px rgba(0,255,170,0.3);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--accent2);
+      border: 1px solid rgba(0,200,255,0.3);
+    }
+    .btn-ghost:hover {
+      border-color: var(--accent2);
+      box-shadow: 0 0 20px rgba(0,200,255,0.2);
+    }
 
-        .hero-contact a {
-            color: var(--highlight);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
+    .hero-stats {
+      display: flex; gap: 3rem; margin-top: 4rem;
+      border-top: 1px solid var(--border);
+      padding-top: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .stat-item { }
+    .stat-num {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 0.4rem;
+    }
 
-        .hero-contact a:hover {
-            transform: translateY(-3px);
-            text-decoration: underline;
-        }
+    /* Glowing orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .orb-1 {
+      width: 400px; height: 400px;
+      background: rgba(0,255,170,0.06);
+      top: 10%; right: 5%;
+      animation: drift 12s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      width: 300px; height: 300px;
+      background: rgba(0,200,255,0.05);
+      bottom: 20%; right: 20%;
+      animation: drift 9s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes drift {
+      from { transform: translate(0,0); }
+      to { transform: translate(30px, -40px); }
+    }
 
-        /* Section Styles */
-        section {
-            margin: 3rem 2rem;
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-        }
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .section-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 2px;
+    }
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
 
-        h2 {
-            color: var(--primary);
-            border-bottom: 3px solid var(--highlight);
-            padding-bottom: 0.5rem;
-            margin-bottom: 2rem;
-            font-size: 2rem;
-        }
+    /* ── ABOUT ── */
+    #about { padding: 7rem 4rem; }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .about-text p {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 1.2rem;
+    }
+    .about-text p strong { color: var(--text); font-weight: 600; }
 
-        h3 {
-            color: var(--accent);
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
+    .about-meta { display: flex; flex-direction: column; gap: 1rem; }
+    .meta-row {
+      display: flex;
+      border: 1px solid var(--border);
+      padding: 1rem 1.2rem;
+      background: var(--surface);
+      gap: 1rem;
+      align-items: center;
+      transition: border-color 0.2s;
+    }
+    .meta-row:hover { border-color: var(--accent); }
+    .meta-icon {
+      font-size: 1.1rem;
+      width: 24px; text-align: center;
+      color: var(--accent);
+    }
+    .meta-key {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      min-width: 90px;
+    }
+    .meta-val {
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+    .meta-val a { color: var(--accent2); text-decoration: none; }
+    .meta-val a:hover { text-decoration: underline; }
 
-        /* Experience Section */
-        .experience-item {
-            margin-bottom: 2.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border);
-        }
+    /* ── SKILLS ── */
+    #skills { padding: 7rem 4rem; background: var(--surface); }
 
-        .experience-item:last-child {
-            border-bottom: none;
-        }
+    .skills-intro {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 700px;
+      line-height: 1.8;
+      margin-bottom: 3.5rem;
+    }
+    .skills-intro strong { color: var(--accent); }
 
-        .job-title {
-            color: var(--highlight);
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5px;
+    }
+    .skill-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .skill-card:hover { border-color: rgba(0,255,170,0.3); }
+    .skill-card:hover::before { opacity: 1; }
 
-        .company {
-            color: var(--accent);
-            font-weight: 600;
-        }
+    .skill-cat {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .skill-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .skill-transfer {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .skill-tags {
+      display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.2rem;
+    }
+    .tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      padding: 0.3rem 0.6rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      letter-spacing: 1px;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .skill-card:hover .tag { border-color: rgba(0,255,170,0.25); color: var(--text); }
 
-        .date {
-            color: #666;
-            font-style: italic;
-            margin-bottom: 0.5rem;
-        }
+    /* Language proficiency bar */
+    .skill-bar { margin-top: 1rem; }
+    .skill-bar-label {
+      display: flex; justify-content: space-between;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 1px;
+      margin-bottom: 0.3rem;
+    }
+    .skill-bar-track {
+      height: 3px;
+      background: var(--surface2);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .skill-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 2px;
+      animation: fillBar 1.5s ease forwards;
+      width: 0;
+    }
+    @keyframes fillBar {
+      to { width: var(--pct); }
+    }
 
-        .description {
-            margin-top: 0.5rem;
-            color: #555;
-        }
+    /* ── EXPERIENCE ── */
+    #experience { padding: 7rem 4rem; }
+    .timeline { position: relative; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 12px; top: 6px; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+    }
 
-        .description li {
-            margin-left: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .timeline-dot {
+      width: 25px; height: 25px;
+      border: 2px solid var(--accent);
+      background: var(--bg);
+      border-radius: 50%;
+      position: relative;
+      z-index: 1;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 4px;
+    }
+    .timeline-dot::after {
+      content: '';
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
 
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
+    .timeline-content {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.8rem 2rem;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+    .timeline-content:hover { border-color: rgba(0,255,170,0.3); }
 
-        .skill-card {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--highlight);
-        }
+    .tl-header { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .tl-role { font-size: 1.1rem; font-weight: 700; }
+    .tl-period {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 1px;
+      background: rgba(0,255,170,0.08);
+      padding: 0.25rem 0.7rem;
+      border: 1px solid rgba(0,255,170,0.2);
+      align-self: start;
+    }
+    .tl-company {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent2);
+      letter-spacing: 1px;
+      margin-bottom: 1.2rem;
+    }
+    .tl-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .tl-list li {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+    .tl-list li::before {
+      content: '▸';
+      position: absolute; left: 0;
+      color: var(--accent);
+      font-size: 0.7rem;
+      top: 2px;
+    }
+    .tl-list li strong { color: var(--accent); }
+    .tl-tech {
+      display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
 
-        .skill-card h4 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
+    /* ── PROJECTS ── */
+    #projects { padding: 7rem 4rem; background: var(--surface); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5px;
+    }
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s;
+    }
+    .project-card:hover {
+      border-color: rgba(0,200,255,0.4);
+      transform: translateY(-3px);
+    }
+    .project-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: rgba(0,255,170,0.08);
+      position: absolute;
+      top: 1rem; right: 1.5rem;
+      line-height: 1;
+    }
+    .project-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--accent2);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .project-name { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .project-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
 
-        .skill-card p {
-            color: #666;
-            font-size: 0.95rem;
-        }
+    /* ── CERTIFICATIONS ── */
+    #certifications { padding: 7rem 4rem; }
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .cert-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1rem 1.3rem;
+      transition: border-color 0.2s;
+    }
+    .cert-item:hover { border-color: rgba(0,255,170,0.3); }
+    .cert-icon { color: var(--accent); font-size: 1.1rem; flex-shrink: 0; }
+    .cert-name { font-size: 0.85rem; line-height: 1.5; }
+    .cert-issuer {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--accent2);
+      letter-spacing: 1px;
+      margin-top: 0.2rem;
+    }
 
-        /* Projects Section */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
+    /* ── EDUCATION ── */
+    #education { padding: 7rem 4rem; background: var(--surface); }
+    .edu-card {
+      max-width: 700px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      position: relative;
+    }
+    .edu-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2));
+    }
+    .edu-degree { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .edu-uni {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent2);
+      letter-spacing: 1px;
+      margin-bottom: 1.2rem;
+    }
+    .edu-cgpa {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: rgba(0,255,170,0.08);
+      border: 1px solid rgba(0,255,170,0.2);
+      padding: 0.4rem 1rem;
+      margin-bottom: 1rem;
+    }
+    .edu-subjects {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
 
-        .project-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
+    /* ── LANGUAGES ── */
+    .lang-grid { display: flex; gap: 2rem; margin-top: 2.5rem; flex-wrap: wrap; }
+    .lang-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      min-width: 180px;
+    }
+    .lang-name { font-weight: 700; font-size: 1.05rem; margin-bottom: 0.3rem; }
+    .lang-level {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 1.5px;
+      margin-bottom: 0.8rem;
+    }
 
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
+    /* ── REFERENCES ── */
+    #references { padding: 7rem 4rem; }
+    .ref-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5px;
+    }
+    .ref-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      transition: border-color 0.2s;
+    }
+    .ref-card:hover { border-color: rgba(0,255,170,0.3); }
+    .ref-name { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .ref-role { font-size: 0.8rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+    .ref-contact {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent2);
+      letter-spacing: 1px;
+      display: flex; flex-direction: column; gap: 0.3rem;
+    }
+    .ref-contact a { color: inherit; text-decoration: none; }
+    .ref-contact a:hover { text-decoration: underline; }
 
-        .project-card h3 {
-            color: white;
-            margin-top: 0;
-            margin-bottom: 0.5rem;
-        }
+    /* ── CONTACT ── */
+    #contact { padding: 7rem 4rem; text-align: center; position: relative; overflow: hidden; }
+    .contact-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(0,255,170,0.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .contact-heading {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -2px;
+      margin-bottom: 1rem;
+    }
+    .contact-sub {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 2px;
+      margin-bottom: 3rem;
+    }
+    .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-        .project-tech {
-            background: rgba(255,255,255,0.2);
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            display: inline-block;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 4rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      position: relative; z-index: 1;
+    }
+    footer p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+    footer span { color: var(--accent); }
 
-        /* Languages Section */
-        .language-item {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border);
-        }
+    /* ── SCROLL FADE-IN ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-        .language-item:last-child {
-            border-bottom: none;
-        }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      #hero, #about, #skills, #experience, #projects,
+      #certifications, #education, #references, #contact { padding: 5rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      footer { padding: 2rem 1.5rem; }
+    }
 
-        .language-name {
-            font-weight: bold;
-            color: var(--accent);
-            margin-bottom: 0.3rem;
-        }
-
-        /* Education Section */
-        .education-item {
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .education-item:last-child {
-            border-bottom: none;
-        }
-
-        .degree {
-            font-weight: bold;
-            color: var(--highlight);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--primary);
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
-        }
-
-        .social-links {
-            margin: 1rem 0;
-        }
-
-        .social-links a {
-            color: var(--highlight);
-            text-decoration: none;
-            margin: 0 1rem;
-            transition: transform 0.3s;
-        }
-
-        .social-links a:hover {
-            transform: scale(1.2);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav ul {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero-contact {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            section, .hero {
-                margin: 1rem;
-                padding: 1.5rem;
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        section {
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        .btn {
-            display: inline-block;
-            background: var(--highlight);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            text-decoration: none;
-            transition: all 0.3s;
-            margin-top: 1rem;
-        }
-
-        .btn:hover {
-            background: var(--accent);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
-        }
-
-        .btn-secondary {
-            background: var(--accent);
-        }
-
-        .btn-secondary:hover {
-            background: var(--highlight);
-        }
-    </style>
+    /* ── SCAN LINE EFFECT ── */
+    .scanline {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(0,255,170,0.15), transparent);
+      animation: scan 4s linear infinite;
+      pointer-events: none;
+      z-index: 50;
+    }
+    @keyframes scan {
+      0% { top: 0; }
+      100% { top: 100vh; }
+    }
+  </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <div class="container">
-            <div class="logo">RM</div>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <div class="hero">
-        <h1>Rafia Marrium</h1>
-        <div class="title">Backend Software Engineer</div>
-        <p>Specialized in Scala, Java, and microservices architecture. Building scalable solutions with CQRS and event-driven design. Currently based in Copenhagen, Denmark.</p>
-        <div class="hero-contact">
-            <a href="mailto:rafimarrium@gmail.com">✉️ rafimarrium@gmail.com</a>
-            <a href="tel:+4571682355">📱 +45 71 68 23 55</a>
-            <a href="https://linkedin.com/in/rafia-marrium" target="_blank">💼 LinkedIn</a>
-            <a href="https://github.com" target="_blank">💻 GitHub</a>
-        </div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="scanline"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">RM_DEV</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="hero-inner">
+    <div class="hero-tag">Software Engineer · Backend Specialist</div>
+    <h1 class="hero-name">
+      <div class="line1">Rafia</div>
+      <div class="line2">Marrium</div>
+    </h1>
+    <p class="hero-title">// Backend · Microservices · Distributed Systems · XR</p>
+    <p class="hero-desc">
+      I build <strong>scalable backend systems</strong> that power real-world applications — from fintech microservices in Scala to AR experiences in Unity. My skills cross languages, paradigms, and domains. <strong>Fully authorized to work in Denmark.</strong>
+    </p>
+    <div class="hero-cta">
+      <a href="#experience" class="btn btn-primary">View Experience</a>
+      <a href="mailto:rafimarrium@gmail.com" class="btn btn-ghost">Get In Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">7</div>
+        <div class="stat-label">Microservices Built</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">80%</div>
+        <div class="stat-label">Performance Gain</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">7</div>
+        <div class="stat-label">Certifications</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">About Me</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I'm an experienced software engineer based in <strong>Copenhagen, Denmark</strong>, specialising in backend development and microservices. My foundation is <strong>Scala and Java</strong>, with a deep understanding of CQRS, event-driven design, and hexagonal architecture.</p>
+      <p>What sets me apart is the <strong>breadth of my technical journey</strong> — from building reactive microservices for US-based e-commerce to developing AR-powered mobile applications and native Android tools for marine research. Every domain has sharpened a different edge of my engineering instincts.</p>
+      <p>Beyond code, I'm a <strong>documentation enthusiast</strong> (yes, really), a collaborative team player, and someone who thrives on learning. Currently deepening my Danish at VSK Dansk language school, because connecting with the culture matters to me as much as the work itself.</p>
+    </div>
+    <div class="about-meta reveal">
+      <div class="meta-row">
+        <span class="meta-icon">📍</span>
+        <span class="meta-key">Location</span>
+        <span class="meta-val">Ballerup, Copenhagen, Denmark</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-icon">✉️</span>
+        <span class="meta-key">Email</span>
+        <span class="meta-val"><a href="mailto:rafimarrium@gmail.com">rafimarrium@gmail.com</a></span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-icon">📞</span>
+        <span class="meta-key">Phone</span>
+        <span class="meta-val">+45 71 68 23 55</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-icon">🔗</span>
+        <span class="meta-key">LinkedIn</span>
+        <span class="meta-val"><a href="https://www.linkedin.com/in/rafia-marrium/" target="_blank">rafia-marrium</a></span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-icon">🛂</span>
+        <span class="meta-key">Work Auth</span>
+        <span class="meta-val">Fully authorized · No sponsorship needed</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-icon">🌐</span>
+        <span class="meta-key">Languages</span>
+        <span class="meta-val">English C1 · Danish A2+</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Transferable Skills</h2>
+    <div class="section-line"></div>
+  </div>
+  <p class="skills-intro reveal">
+    My skills aren't tied to a single language or domain — they're <strong>portable engineering principles</strong> proven across Scala, Java, C#, e-commerce, fintech, AR, and marine research. Below is how each capability transfers across contexts.
+  </p>
+  <div class="skills-grid">
+
+    <div class="skill-card reveal">
+      <div class="skill-cat">Core Architecture</div>
+      <div class="skill-name">Distributed Systems Design</div>
+      <div class="skill-transfer">Built and maintained microservices using Hexagonal Architecture and CQRS in production. These patterns are language-agnostic — the same separation of concerns applies in any modern backend stack.</div>
+      <div class="skill-tags">
+        <span class="tag">CQRS</span><span class="tag">Hexagonal Arch</span>
+        <span class="tag">Event-Driven</span><span class="tag">API-First</span>
+      </div>
     </div>
 
-    <!-- About Section -->
-    <section id="about">
-        <h2>About Me</h2>
-        <p>I'm an experienced software engineer specializing in backend development and microservices, with a strong background in Scala and Java. I have a deep understanding of CQRS and event-driven design, and I've worked extensively on e-commerce solutions.</p>
-        <p>Beyond coding, I'm a driven and motivated person who thrives on collaboration—and yes, I'm also a bit of a documentation nerd! I love solving complex problems, writing clean and efficient code, and occasionally unwinding by baking something delicious.</p>
-        <p>Right now, I'm also learning Danish to better understand the culture and connect with the people around me. Always excited to learn new things, tackle challenges, and work with like-minded folks!</p>
-    </section>
+    <div class="skill-card reveal">
+      <div class="skill-cat">Backend Languages</div>
+      <div class="skill-name">Multi-Language Proficiency</div>
+      <div class="skill-transfer">Production experience in Scala, Java, and C#. The ability to switch paradigms — OOP, functional, reactive — means adapting to any team's stack with minimal ramp-up time.</div>
+      <div class="skill-tags">
+        <span class="tag">Scala</span><span class="tag">Java</span>
+        <span class="tag">C#</span><span class="tag">Functional Programming</span>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-bar-label"><span>Scala / Java</span><span>Expert</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:90%"></div></div>
+      </div>
+      <div class="skill-bar" style="margin-top:0.6rem">
+        <div class="skill-bar-label"><span>C#</span><span>Proficient</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:75%"></div></div>
+      </div>
+    </div>
 
-    <!-- Experience Section -->
-    <section id="experience">
-        <h2>Work Experience</h2>
+    <div class="skill-card reveal">
+      <div class="skill-cat">Reactive Systems</div>
+      <div class="skill-name">Akka & Kafka Ecosystem</div>
+      <div class="skill-transfer">Deep expertise in actor-model concurrency (Akka), streaming (Akka Streams), and clustering. These reactive principles map directly to modern event-driven architectures in any cloud environment.</div>
+      <div class="skill-tags">
+        <span class="tag">Akka</span><span class="tag">Kafka</span>
+        <span class="tag">Akka Streams</span><span class="tag">Akka Cluster</span>
+      </div>
+    </div>
 
-        <div class="experience-item">
-            <div class="job-title">Academic Employee – Section for Data and Monitoring</div>
-            <div class="company">DTU (Danmarks Tekniske Universitet), Lyngby, Denmark</div>
-            <div class="date">Present</div>
-            <div class="description">
-                <strong>Technologies:</strong> Java, C# .NET, Android Studio, WPF, Entity Framework<br><br>
-                <ul>
-                    <li>Development of 'FiskeSnak', an android-native application (Java, Gradle) with voice recording and storage, user management, and remote server connection for transcription</li>
-                    <li>Feature development and bug fixing of the internal organizational software 'Fiskeline' (C# .NET, WPF, Entity Framework, MVVM) contributing to system reliability</li>
-                    <li>Explored and documented a centralized setup of CVAT on a single GPU-enabled server, allowing the annotation team remote access</li>
-                </ul>
-            </div>
+    <div class="skill-card reveal">
+      <div class="skill-cat">Data & Persistence</div>
+      <div class="skill-name">Polyglot Database Expertise</div>
+      <div class="skill-transfer">Worked with relational (Postgres, MySQL) and NoSQL (Cassandra) databases. Understanding tradeoffs between consistency models is a transferable asset for any data-intensive system.</div>
+      <div class="skill-tags">
+        <span class="tag">PostgreSQL</span><span class="tag">Cassandra</span>
+        <span class="tag">MySQL</span><span class="tag">Entity Framework</span>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <div class="skill-cat">Quality Engineering</div>
+      <div class="skill-name">Test-Driven Mindset</div>
+      <div class="skill-transfer">Achieved 80% statement and branch coverage using ScalaTest and Mockito. Writing testable code is a discipline that applies universally — not a tool-specific skill.</div>
+      <div class="skill-tags">
+        <span class="tag">ScalaTest</span><span class="tag">Mockito</span>
+        <span class="tag">JUnit</span><span class="tag">TDD</span>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <div class="skill-cat">Infrastructure</div>
+      <div class="skill-name">DevOps & Cloud Fluency</div>
+      <div class="skill-transfer">Hands-on with Kubernetes, Docker, and GCP. Containerisation and orchestration knowledge reduces friction when deploying to any cloud-native environment.</div>
+      <div class="skill-tags">
+        <span class="tag">Kubernetes</span><span class="tag">Docker</span>
+        <span class="tag">GCP</span><span class="tag">CVAT / GPU Servers</span>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <div class="skill-cat">Mobile & XR</div>
+      <div class="skill-name">Cross-Platform Development</div>
+      <div class="skill-transfer">Led AR integrations (ARCore, ARFoundation, Vuforia) and native Android (Java, Gradle). Breadth across platforms builds intuition for API design and client-server contracts.</div>
+      <div class="skill-tags">
+        <span class="tag">Android / Java</span><span class="tag">Unity / C#</span>
+        <span class="tag">ARCore</span><span class="tag">Vuforia</span>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <div class="skill-cat">Collaboration</div>
+      <div class="skill-name">Mentorship & Team Leadership</div>
+      <div class="skill-transfer">Mentored 2 new engineers through onboarding and led cross-functional collaboration between support and engineering. Communication skills are the most portable tool in any stack.</div>
+      <div class="skill-tags">
+        <span class="tag">Mentoring</span><span class="tag">Documentation</span>
+        <span class="tag">Agile</span><span class="tag">Cross-team Comms</span>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <div class="skill-cat">API & Tooling</div>
+      <div class="skill-name">API Design & Integration</div>
+      <div class="skill-transfer">Experienced with API-first design using Stoplight, Guardrail, and Jackson. Well-designed APIs are the connective tissue of distributed systems — and the skill transfers to every project.</div>
+      <div class="skill-tags">
+        <span class="tag">REST</span><span class="tag">Stoplight</span>
+        <span class="tag">Guardrail</span><span class="tag">Jackson</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Work Experience</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="timeline">
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="tl-header">
+          <div class="tl-role">Academic Employee — Data &amp; Monitoring</div>
+          <div class="tl-period">PRESENT</div>
         </div>
-
-        <div class="experience-item">
-            <div class="job-title">Software Engineer – Backend</div>
-            <div class="company">Upstart Commerce, New Hampshire, USA (Remote)</div>
-            <div class="date">Apr 2022 – Dec 2023</div>
-            <div class="description">
-                <strong>Technologies:</strong> Scala, Java, Hexagonal Architecture, CQRS, ScalaTest, Mockito<br><br>
-                <ul>
-                    <li>Participated in development and maintenance of 4 existing and 3 new microservices using Scala, applying Hexagonal Architecture, CQRS, and API-first principles</li>
-                    <li>Optimized bulk write and update processes, reducing execution time by 80% through query tuning and code optimization</li>
-                    <li>Drove quality assurance efforts, achieving 80% statement and branch coverage with ScalaTest and Mockito</li>
-                    <li>Collaborated with support team to streamline communication and address feature requests</li>
-                    <li>Mentored 2 new team members through onboarding and technology integration</li>
-                </ul>
-            </div>
+        <div class="tl-company">DTU (Danmarks Tekniske Universitet) · Lyngby, Denmark</div>
+        <ul class="tl-list">
+          <li>Developed <em>FiskeSnak</em>, a native Android application (Java, Gradle) featuring voice recording, remote server transcription, user management, and transcript editing &amp; database upload.</li>
+          <li>Contributed to <em>Fiskeline</em>, an internal C# .NET (WPF, Entity Framework, MVVM) organizational system — delivering feature development and bug fixes that improved system reliability.</li>
+          <li>Explored, configured, and documented a <strong>centralized CVAT deployment</strong> on a GPU-enabled server, enabling the annotation team to work remotely and eliminating the need for individual high-spec machines.</li>
+        </ul>
+        <div class="tl-tech">
+          <span class="tag">Java</span><span class="tag">C# .NET</span><span class="tag">Android</span>
+          <span class="tag">WPF</span><span class="tag">MVVM</span><span class="tag">CVAT</span><span class="tag">Gradle</span>
         </div>
+      </div>
+    </div>
 
-        <div class="experience-item">
-            <div class="job-title">Unity Software Developer</div>
-            <div class="company">Quantum Edge LLC, Pakistan</div>
-            <div class="date">Aug 2019 – Apr 2022</div>
-            <div class="description">
-                <strong>Technologies:</strong> C#, Unity, ARCore, ARFoundation, Vuforia SDK<br><br>
-                <ul>
-                    <li>Led integration efforts for Augmented Reality modules for 5+ applications</li>
-                    <li>Designed and developed 10+ 2D games in C#, overseeing entire development lifecycle</li>
-                    <li>Implemented Android Ads integration using Google AdMob and Unity native ads</li>
-                </ul>
-            </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="tl-header">
+          <div class="tl-role">Software Engineer — Backend</div>
+          <div class="tl-period">APR 2022 – DEC 2023</div>
         </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects">
-        <h2>Key Projects</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <h3>FiskeSnak</h3>
-                <p>Native Android application for capturing voice recordings, uploading to a server for transcription, with editing and database storage capabilities.</p>
-                <div>
-                    <span class="project-tech">Java</span>
-                    <span class="project-tech">Android</span>
-                    <span class="project-tech">Gradle</span>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <h3>PIM Microservice</h3>
-                <p>Product Information Management system enabling custom attribute creation, product type definition, and JSON schema validation for e-commerce platforms.</p>
-                <div>
-                    <span class="project-tech">Java</span>
-                    <span class="project-tech">Microservices</span>
-                    <span class="project-tech">CQRS</span>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <h3>Pricing Feed Service</h3>
-                <p>High-performance service facilitating bulk upload of sales and pricing data with validation and real-time upload tracking.</p>
-                <div>
-                    <span class="project-tech">Scala</span>
-                    <span class="project-tech">Event-driven</span>
-                    <span class="project-tech">Kafka</span>
-                </div>
-            </div>
+        <div class="tl-company">Upstart Commerce · New Hampshire, USA (Remote)</div>
+        <ul class="tl-list">
+          <li>Participated in development and maintenance of <strong>4 existing + 3 new microservices</strong> in Scala using Hexagonal Architecture, CQRS, and API-first principles for a scalable e-commerce platform.</li>
+          <li>Optimized bulk write and update processes, achieving an <strong>80% reduction in execution time</strong> through query tuning and code optimization.</li>
+          <li>Drove QA efforts using <strong>ScalaTest and Mockito</strong>, reaching 80% statement and branch coverage.</li>
+          <li>Collaborated with a 3-person support team to streamline bug triage, customer communication, and feature requests, significantly improving product support efficiency.</li>
+          <li>Mentored <strong>2 new team members</strong> through onboarding, accelerating their ramp-up on tech stack and workflows.</li>
+        </ul>
+        <div class="tl-tech">
+          <span class="tag">Scala</span><span class="tag">Hexagonal Arch</span><span class="tag">CQRS</span>
+          <span class="tag">Kafka</span><span class="tag">Akka</span><span class="tag">ScalaTest</span><span class="tag">Mockito</span>
+          <span class="tag">Postgres</span><span class="tag">Cassandra</span>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <!-- Skills Section -->
-    <section id="skills">
-        <h2>Skills & Expertise</h2>
-        <div class="skills-grid">
-            <div class="skill-card">
-                <h4>🖥️ Languages</h4>
-                <p><strong>Primary:</strong> Scala, Java, C#<br>
-                <strong>Other:</strong> JavaScript, Python</p>
-            </div>
-
-            <div class="skill-card">
-                <h4>🏗️ Architecture & Patterns</h4>
-                <p>Hexagonal Architecture, CQRS, Event-driven Design, Microservices, Domain-Driven Design</p>
-            </div>
-
-            <div class="skill-card">
-                <h4>🛠️ Tools & Frameworks</h4>
-                <p>AKKA, Kafka, Spring, Entity Framework, WPF, Android Studio, IntelliJ, Visual Studio</p>
-            </div>
-
-            <div class="skill-card">
-                <h4>💾 Databases</h4>
-                <p>PostgreSQL, Cassandra, MySQL</p>
-            </div>
-
-            <div class="skill-card">
-                <h4>☁️ DevOps & Cloud</h4>
-                <p>Docker, Kubernetes, Google Cloud Platform, GitHub</p>
-            </div>
-
-            <div class="skill-card">
-                <h4>✅ Testing & QA</h4>
-                <p>JUnit, ScalaTest, Mockito, 80%+ Code Coverage</p>
-            </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="tl-header">
+          <div class="tl-role">Unity Software Developer</div>
+          <div class="tl-period">AUG 2019 – APR 2022</div>
         </div>
+        <div class="tl-company">Quantum Edge LLC · Pakistan</div>
+        <ul class="tl-list">
+          <li>Led <strong>AR module integration</strong> for 5+ applications, specialising in Google ARCore, ARFoundation, and Vuforia SDK.</li>
+          <li>Designed and developed <strong>10+ 2D games</strong> in C#, managing the full development lifecycle from concept to delivery.</li>
+          <li>Implemented Android Ad integration (Google AdMob and Unity native ads) across internal and client projects, adding monetisation capabilities.</li>
+        </ul>
+        <div class="tl-tech">
+          <span class="tag">C#</span><span class="tag">Unity</span><span class="tag">ARCore</span>
+          <span class="tag">ARFoundation</span><span class="tag">Vuforia</span><span class="tag">Android</span><span class="tag">AdMob</span>
+        </div>
+      </div>
+    </div>
 
-        <!-- Certifications -->
-        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--border);">
-            <h3>Certifications</h3>
-            <ul style="list-style: none; padding-left: 0;">
-                <li>✓ Scala & Functional Programming Essentials (Udemy)</li>
-                <li>✓ Advanced Scala and Functional Programming (Udemy)</li>
-                <li>✓ Lightbend Akka for Scala Professional (Akka)</li>
-                <li>✓ Lightbend Akka Streams for Scala Professional (Akka)</li>
-                <li>✓ Lightbend Akka Cluster Fundamentals (Akka)</li>
-                <li>✓ Reactive Architecture: Introduction to Reactive Systems (Akka)</li>
-                <li>✓ Reactive Architecture: Domain Driven Design (Akka)</li>
-            </ul>
-        </div>
-    </section>
+  </div>
+</section>
 
-    <!-- Education Section -->
-    <section id="education">
-        <h2>Education</h2>
-        <div class="education-item">
-            <div class="degree">Bachelor of Science in Software Engineering</div>
-            <div class="company">COMSATS University, Islamabad, Pakistan</div>
-            <div class="date">2015 – 2019</div>
-            <p><strong>CGPA:</strong> 3.76 / 4.00</p>
-            <p><strong>Major Subjects:</strong> Object-Oriented Programming, Web Programming, Database Management, Data Structures, Software Engineering, Computer Graphics, AI</p>
-        </div>
-    </section>
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Key Projects</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
 
-    <!-- Languages Section -->
-    <section id="languages">
-        <h2>Languages</h2>
-        <div class="language-item">
-            <div class="language-name">English</div>
-            <div class="language-level">Fluent • Level C1 (IELTS: 7.5)</div>
-        </div>
-        <div class="language-item">
-            <div class="language-name">Danish</div>
-            <div class="language-level">Beginner • Level A2+ (Currently enrolled in VSK Dansk language school)</div>
-        </div>
-    </section>
+    <div class="project-card reveal">
+      <div class="project-num">01</div>
+      <div class="project-tag">Android · Java · DTU</div>
+      <div class="project-name">FiskeSnak</div>
+      <div class="project-desc">Native Android application for capturing voice recordings in the field, uploading them to a remote server for automated transcription, and enabling researchers to review, edit, and store transcripts in an in-house database. Built with Java and Gradle.</div>
+    </div>
 
-    <!-- Contact Section -->
-    <section id="contact">
-        <h2>Let's Connect</h2>
-        <p style="font-size: 1.1rem; margin-bottom: 2rem;">I'm always interested in exciting opportunities and collaborations. Feel free to reach out!</p>
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-            <a href="mailto:rafimarrium@gmail.com" class="btn">📧 Email Me</a>
-            <a href="https://linkedin.com/in/rafia-marrium" target="_blank" class="btn btn-secondary">💼 LinkedIn</a>
-            <a href="https://github.com" target="_blank" class="btn btn-secondary">💻 GitHub</a>
-        </div>
-    </section>
+    <div class="project-card reveal">
+      <div class="project-num">02</div>
+      <div class="project-tag">Microservice · Java · E-Commerce</div>
+      <div class="project-name">PIM Microservice</div>
+      <div class="project-desc">Product Information Management system enabling custom attribute creation, product type modelling, and JSON schema validation. Users can define bespoke attribute schemas and link them to custom product types, against which products and variants are created.</div>
+    </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Rafia Marrium. All rights reserved.</p>
-        <div class="social-links">
-            <a href="mailto:rafimarrium@gmail.com">Email</a>
-            <a href="https://linkedin.com/in/rafia-marrium" target="_blank">LinkedIn</a>
-            <a href="https://github.com" target="_blank">GitHub</a>
-        </div>
-    </footer>
+    <div class="project-card reveal">
+      <div class="project-num">03</div>
+      <div class="project-tag">Scala · Microservice · E-Commerce</div>
+      <div class="project-name">Pricing Feed Service</div>
+      <div class="project-desc">Scala microservice facilitating bulk upload of sales and pricing data with robust validation pipelines and real-time upload tracking. Designed for high throughput and reliability in a production e-commerce environment.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-header reveal">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Certifications</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="cert-grid">
+    <div class="cert-item reveal">
+      <div class="cert-icon">◈</div>
+      <div>
+        <div class="cert-name">Scala &amp; Functional Programming Essentials</div>
+        <div class="cert-issuer">UDEMY</div>
+      </div>
+    </div>
+    <div class="cert-item reveal">
+      <div class="cert-icon">◈</div>
+      <div>
+        <div class="cert-name">Advanced Scala and Functional Programming</div>
+        <div class="cert-issuer">UDEMY</div>
+      </div>
+    </div>
+    <div class="cert-item reveal">
+      <div class="cert-icon">◈</div>
+      <div>
+        <div class="cert-name">Reactive Architecture: Introduction to Reactive Systems</div>
+        <div class="cert-issuer">AKKA / LIGHTBEND</div>
+      </div>
+    </div>
+    <div class="cert-item reveal">
+      <div class="cert-icon">◈</div>
+      <div>
+        <div class="cert-name">Reactive Architecture: Domain Driven Design</div>
+        <div class="cert-issuer">AKKA / LIGHTBEND</div>
+      </div>
+    </div>
+    <div class="cert-item reveal">
+      <div class="cert-icon">◈</div>
+      <div>
+        <div class="cert-name">Lightbend Akka for Scala — Professional</div>
+        <div class="cert-issuer">AKKA / LIGHTBEND</div>
+      </div>
+    </div>
+    <div class="cert-item reveal">
+      <div class="cert-icon">◈</div>
+      <div>
+        <div class="cert-name">Lightbend Akka Streams for Scala — Professional</div>
+        <div class="cert-issuer">AKKA / LIGHTBEND</div>
+      </div>
+    </div>
+    <div class="cert-item reveal">
+      <div class="cert-icon">◈</div>
+      <div>
+        <div class="cert-name">Lightbend Akka Cluster Fundamentals</div>
+        <div class="cert-issuer">AKKA / LIGHTBEND</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header reveal">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Education</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="edu-card reveal">
+    <div class="edu-degree">Bachelor of Science in Software Engineering</div>
+    <div class="edu-uni">COMSATS University · Islamabad, Pakistan · 2015 – 2019</div>
+    <div class="edu-cgpa">CGPA: 3.76 / 4.00</div>
+    <div class="edu-subjects">
+      <strong style="color:var(--text)">Major Subjects:</strong> Object-Oriented Programming · Web Programming · Database Management · Data Structures · Software Engineering · Computer Graphics · Artificial Intelligence
+    </div>
+  </div>
+
+  <div class="lang-grid" style="margin-top:3rem">
+    <div class="section-header reveal" style="margin-bottom:1rem; grid-column: 1/-1;">
+      <span class="section-num" style="font-size:0.6rem">06.1</span>
+      <h3 style="font-size:1.3rem; font-weight:700">Language Proficiency</h3>
+    </div>
+    <div class="lang-card reveal">
+      <div class="lang-name">English</div>
+      <div class="lang-level">C1 · FLUENT</div>
+      <div class="skill-bar">
+        <div class="skill-bar-label"><span>IELTS Score</span><span>7.5 / 9.0</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:83%"></div></div>
+      </div>
+    </div>
+    <div class="lang-card reveal">
+      <div class="lang-name">Danish</div>
+      <div class="lang-level">A2+ · BEGINNER</div>
+      <div class="skill-bar">
+        <div class="skill-bar-label"><span>VSK Dansk · Module 4</span><span>Growing</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" style="--pct:30%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFERENCES -->
+<section id="references">
+  <div class="section-header reveal">
+    <span class="section-num">07</span>
+    <h2 class="section-title">References</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="ref-grid">
+    <div class="ref-card reveal">
+      <div class="ref-name">Marie Storr-Paulsen</div>
+      <div class="ref-role">Section Head — Section for Monitoring and Data<br>National Institute of Aquatic Resources, DTU<br><em style="color:var(--accent);font-size:0.75rem">(Direct Section Head)</em></div>
+      <div class="ref-contact">
+        <a href="mailto:msp@aqua.dtu.dk">msp@aqua.dtu.dk</a>
+        <span>+45 30 50 42 10</span>
+      </div>
+    </div>
+    <div class="ref-card reveal">
+      <div class="ref-name">Kirsten Birch Håkansson</div>
+      <div class="ref-role">Senior Consultant — Section for Monitoring and Data<br>National Institute of Aquatic Resources, DTU<br><em style="color:var(--accent);font-size:0.75rem">(Direct Manager)</em></div>
+      <div class="ref-contact">
+        <a href="mailto:kih@aqua.dtu.dk">kih@aqua.dtu.dk</a>
+        <span>+45 93 51 10 98</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-glow"></div>
+  <h2 class="contact-heading reveal">Let's Build<br><span style="color:var(--accent)">Something.</span></h2>
+  <p class="contact-sub reveal">OPEN TO OPPORTUNITIES IN DENMARK &amp; REMOTE</p>
+  <div class="contact-links reveal">
+    <a href="mailto:rafimarrium@gmail.com" class="btn btn-primary">rafimarrium@gmail.com</a>
+    <a href="https://www.linkedin.com/in/rafia-marrium/" target="_blank" class="btn btn-ghost">LinkedIn</a>
+    <a href="tel:+4571682355" class="btn btn-ghost">+45 71 68 23 55</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <span>Rafia Marrium</span> — Software Engineer</p>
+  <p>Ballerup, Copenhagen, Denmark</p>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+    ring.style.left = mx + 'px';
+    ring.style.top = my + 'px';
+  });
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '20px';
+      cursor.style.height = '20px';
+      ring.style.width = '50px';
+      ring.style.height = '50px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '12px';
+      cursor.style.height = '12px';
+      ring.style.width = '36px';
+      ring.style.height = '36px';
+    });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), 60 * (i % 4));
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Animate skill bars when visible
+  const bars = document.querySelectorAll('.skill-bar-fill');
+  const barObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.width = getComputedStyle(e.target).getPropertyValue('--pct');
+        barObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  bars.forEach(b => barObserver.observe(b));
+</script>
 </body>
 </html>
